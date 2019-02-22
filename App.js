@@ -1,7 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {searchMovies} from './src/api/fetch.js';
 
 export default class App extends React.Component {
+
+  componentDidMount(){
+    searchMovies('Marvel');
+  }
   render() {
     return (
       <View style={styles.container}>
