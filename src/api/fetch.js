@@ -7,6 +7,7 @@ export const searchMovies = async (movie) =>{
         movie +'&page=1&include_adult=false');
         const movies = await response.json();
         const results = movies.results;
+        
         console.log(results);
     }catch(e){
         console.log(e)

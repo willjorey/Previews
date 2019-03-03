@@ -6,6 +6,7 @@
     "ios": "expo start --ios",
     "eject": "expo eject"
   },
+  "proxy": "http://localhost:4000",
   "dependencies": {
     "expo": "^32.0.0",
     "react": "16.5.0",
@@ -14,5 +15,18 @@
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"
   },
-  "private": true
+  "private": true,
+  "name": "previews",
+  "description": "Express Server",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willjorey/Previews.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/willjorey/Previews/issues"
+  },
+  "homepage": "https://github.com/willjorey/Previews#readme"
 }
