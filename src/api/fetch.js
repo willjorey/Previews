@@ -14,3 +14,15 @@ export const searchMovies = async (movie) =>{
     }
 
 }
+
+export const getPopularMovies = async () =>{
+    try{
+        const response = await fetch('/movie');
+        const movies = await response.json();
+        const results = movies.results;
+        console.log(results);
+    }catch(e){
+        console.log(e)
+    }
+
+}
