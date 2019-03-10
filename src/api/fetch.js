@@ -1,4 +1,5 @@
 import {TMDB_API_KEY, IP} from '../../config.js';
+
 export const searchMovies = async (movie) =>{
     let key = TMDB_API_KEY;
     try{
@@ -17,6 +18,17 @@ export const searchMovies = async (movie) =>{
 export const getPopularMovies = async () =>{
     try{
         const response = await fetch(IP+'/movie');
+        const movies = await response.json();
+        return movies.popular.results
+    }catch(e){
+        console.log(e)
+    }
+
+}
+
+export const getPopularTV = async () =>{
+    try{
+        const response = await fetch(IP+'/tv');
         const movies = await response.json();
         return movies.popular.results
     }catch(e){

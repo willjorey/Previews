@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Image , TouchableOpacity, ToastAndroid} from 'react-native';
-import {searchMovies, getPopularMovies} from '../api/fetch.js';
+import {getPopularTV} from '../api/fetch.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class PopularMovies extends React.Component {
+export default class PopularTV extends React.Component {
   constructor(props){
     super(props);
     this.state={
@@ -13,16 +13,16 @@ export default class PopularMovies extends React.Component {
   }
 
   async componentDidMount(){
-    let movies = await getPopularMovies();
+    let tv = await getPopularTV();
     this.setState({
-      popular: movies,
+      popular: tv,
     });
   };
 
-  onPressMovie = (movie) =>{
+  onPressShow = (movie) =>{
     this.state.favourite.push(movie);
     ToastAndroid.showWithGravityAndOffset(
-      'Movie Added to Favourites',
+      'Show Added to Favourites',
       ToastAndroid.SHORT,
       ToastAndroid.BOTTOM,
       25,
@@ -34,7 +34,7 @@ export default class PopularMovies extends React.Component {
     return (
       <View style={styles.container}>
         <View>
-          <Text style={styles.title}>Popular Movies</Text>
+          <Text style={styles.title}>Popular TV Shows</Text>
           <FlatList
             data={this.state.popular}
             keyExtractor={(item,index) => index.toString()}
@@ -42,12 +42,12 @@ export default class PopularMovies extends React.Component {
             <View style={styles.movieContainer}>
                 <Image style={{width: 100, height: 175}} source={{uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path}}/>
                 <View style={{justifyContent: 'center', width: '75%', height: 175}}>
-                  <Text style={{fontSize: 20, fontWeight:'bold', marginLeft: '20%'}}>{item.title}</Text>
+                  <Text style={{fontSize: 20, fontWeight:'bold', marginLeft: '20%'}}>{item.original_name}</Text>
                     <View style={{flexWrap: 'wrap', alignItems: 'flex-start', flexDirection:'row', marginLeft: '20%', marginTop: '5%'}}>
                       <Icon name='star' color='#FFD700' size={40}/>
                       <Text style={{fontSize: 30, marginLeft: '3%'}}>{item.vote_average}/10</Text>
                     </View>
-                  <TouchableOpacity style={{ marginLeft: '20%', marginTop: '5%'}} onPress={() => this.onPressMovie(item)}>
+                  <TouchableOpacity style={{ marginLeft: '20%', marginTop: '5%'}} onPress={() => this.onPressShow(item)}>
                     <Icon name='rocket' size={30} color="#900" />
                   </TouchableOpacity>
                 </View>
