@@ -6,14 +6,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../actions'; //Import your actions
-
+import Async from '../Async';
+const async = new Async();
 
 class PopularTV extends React.Component {
   constructor(props){
     super(props);
     this.state={
       popular:[],
-      favourite: [],
     }
   }
 
@@ -24,15 +24,28 @@ class PopularTV extends React.Component {
     });
   };
 
-  onPressShow = (movie) =>{
-    this.state.favourite.push(movie);
-    ToastAndroid.showWithGravityAndOffset(
-      'Show Added to Favourites',
-      ToastAndroid.SHORT,
-      ToastAndroid.BOTTOM,
-      25,
-      50,
-    );
+  onPressShow = (show) =>{
+    if (this.props.tv.some( prop => prop.original_name === show.original_name)){
+      ToastAndroid.showWithGravityAndOffset(
+        'Show Already a Favourite',
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      // Add the movie to favourites and save
+    }else{
+      ToastAndroid.showWithGravityAndOffset(
+        'Show Added to Favourites',
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      this.props.addFavShow(show);
+      console.log(this.props.profile)
+      async.storeProfile(this.props.profile);
+    }
   }
 
   render() {
@@ -67,7 +80,8 @@ class PopularTV extends React.Component {
 
 function mapStateToProps(state, props) {
   return {
-      tv:state.profileReducer.tv
+      profile: state.profileReducer.profile,
+      tv: state.profileReducer.profile.tv
   }
 }
 

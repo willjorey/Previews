@@ -15,7 +15,6 @@ class PopularMovies extends React.Component {
     super(props);
     this.state={
       popular:[],
-      favourite: [],
     }
   }
 
@@ -32,29 +31,39 @@ class PopularMovies extends React.Component {
   getProfile = async () =>{
     let profile = await async.getProfile('profile');
     if(profile){
-      console.log('Profile Exists', profile);
+      console.log('Profile Exists');
       this.props.setProfile({'profile': profile});
 
     }else{
       console.log('Profile Does Not Exist');
       let new_profile = {profile: {movies: [], tv: []}};
-      async.storeProfile(new_profile, 'profile');
+      async.storeProfile(new_profile);
       this.props.setProfile(new_profile);
     }
   }
 
   onPressMovie = (movie) =>{
-    this.state.favourite.push(movie);
-    ToastAndroid.showWithGravityAndOffset(
-      'Movie Added to Favourites',
-      ToastAndroid.SHORT,
-      ToastAndroid.BOTTOM,
-      25,
-      50,
-    );
-    this.props.addFavMovie(movie);
-    console.log('MOVIE ADDED', this.props.profile.movies)
-    async.storeProfile(this.props.profile,'profile');
+    // Check if the movie is a favourite
+    if (this.props.movies.some( prop => prop.title === movie.title)){
+      ToastAndroid.showWithGravityAndOffset(
+        'Movie Already a Favourite',
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      // Add the movie to favourites and save
+    }else{
+      ToastAndroid.showWithGravityAndOffset(
+        'Movie Added to Favourites',
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+      this.props.addFavMovie(movie);
+      async.storeProfile(this.props.profile);
+    }
   }
 
   render() {
@@ -90,6 +99,7 @@ class PopularMovies extends React.Component {
 function mapStateToProps(state, props) {
   return {
       profile:state.profileReducer.profile,
+      movies: state.profileReducer.profile.movies,
   }
 }
 

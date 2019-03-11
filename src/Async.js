@@ -3,9 +3,9 @@ export default class Async{
     constructor(){
 
     }
-    storeProfile = async (profile, uid) => {
+    storeProfile = async (profile) => {
         try {
-          return await AsyncStorage.setItem(uid, JSON.stringify(profile));
+          return await AsyncStorage.setItem('profile', JSON.stringify(profile));
         } catch (error) {
           // Error saving data
           console.log(error)

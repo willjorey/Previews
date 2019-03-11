@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { ADD_MOVIETOFAV, SET_FAVTV , SET_PROFILE} from "../actions/";
+import { ADD_MOVIETOFAV, ADD_SHOWTOFAV , SET_PROFILE} from "../actions/";
 
 let profileState = {profile: {movies: [], tv: []}};
 const profileReducer = (state = profileState, action) => {
@@ -9,15 +9,19 @@ const profileReducer = (state = profileState, action) => {
                 state = {...profileState};
                 state.profile.movies.push(action.movie);
                 return state;
+        case ADD_SHOWTOFAV:
+                state = {...profileState};
+                state.profile.tv.push(action.show);
+                return state;
+
         case SET_PROFILE:
-        console.log(action.profile)
             state = {...profileState };
             let movies = action.profile.profile.movies;
             let tv = action.profile.profile.tv;
-            if( movies.length > 0)
+            if(movies)
                 state.profile.movies = [...state.profile.movies, ...movies]
-            if( tv.length > 0)
-                state.profile.tv = [...state.profile.movies, ...tv]
+            if(tv)
+                state.profile.tv = [...state.profile.tv, ...tv]
             return state;
         default:
             return state;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Image , TouchableOpacity, ToastAndroid} from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image , ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {bindActionCreators} from 'redux';
@@ -13,7 +13,7 @@ class Favourites extends React.Component {
     this.state ={
       movies: [],
       tv: [],
-      refresh: true,
+      refresh: true
     }
   }
 
@@ -22,32 +22,52 @@ class Favourites extends React.Component {
       movies: this.props.movies,
       tv: this.props.tv,
       refresh: !this.state.refresh
-    })
+    });
+    console.log(this.props)
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.title}>My Movies</Text>
-          <FlatList
-            data={this.state.movies}
-            keyExtractor={(item,index) => index.toString()}
-            renderItem={({item}) => 
-            <View style={styles.movieContainer}>
-                <Image style={{width: 125, height: 200}} source={{uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path}}/>
-                <View style={{justifyContent: 'center', width: '75%', height: 175}}>
-                  <Text style={{fontSize: 20, fontWeight:'bold', marginLeft: '20%'}}>{item.title}</Text>
-                    <View style={{flexWrap: 'wrap', alignItems: 'flex-start', flexDirection:'row', marginLeft: '20%', marginTop: '5%'}}>
-                      <Icon name='star' color='#FFD700' size={40}/>
-                      <Text style={{fontSize: 30, marginLeft: '3%'}}>{item.vote_average}/10</Text>
-                    </View>
-                </View>
-            </View>
-            }
-          />
+      <ScrollView>
+        <View style={styles.container}>
+          <View>
+            <Text style={styles.title}>My Movies</Text>
+            <FlatList
+              data={this.state.movies}
+              keyExtractor={(item,index) => index.toString()}
+              renderItem={({item}) => 
+              <View style={styles.movieContainer}>
+                  <Image style={{width: 125, height: 200}} source={{uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path}}/>
+                  <View style={{justifyContent: 'center', width: '75%', height: 175}}>
+                    <Text style={{fontSize: 20, fontWeight:'bold', marginLeft: '20%'}}>{item.title}</Text>
+                      <View style={{flexWrap: 'wrap', alignItems: 'flex-start', flexDirection:'row', marginLeft: '20%', marginTop: '5%'}}>
+                        <Icon name='star' color='#FFD700' size={40}/>
+                        <Text style={{fontSize: 30, marginLeft: '3%'}}>{item.vote_average}/10</Text>
+                      </View>
+                  </View>
+              </View>
+              }
+            />
+            <Text style={styles.title}>My TV Shows</Text>
+            <FlatList
+              data={this.state.tv}
+              keyExtractor={(item,index) => index.toString()}
+              renderItem={({item}) => 
+              <View style={styles.movieContainer}>
+                  <Image style={{width: 125, height: 200}} source={{uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path}}/>
+                  <View style={{justifyContent: 'center', width: '75%', height: 175}}>
+                    <Text style={{fontSize: 20, fontWeight:'bold', marginLeft: '20%'}}>{item.original_name}</Text>
+                      <View style={{flexWrap: 'wrap', alignItems: 'flex-start', flexDirection:'row', marginLeft: '20%', marginTop: '5%'}}>
+                        <Icon name='star' color='#FFD700' size={40}/>
+                        <Text style={{fontSize: 30, marginLeft: '3%'}}>{item.vote_average}/10</Text>
+                      </View>
+                  </View>
+              </View>
+              }
+            />
+          </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
