@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Image , TouchableOpacity, ToastAndroid} from 'react-native';
-import {getPopularTV} from '../api/fetch.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {bindActionCreators} from 'redux';
@@ -8,53 +7,41 @@ import { connect } from 'react-redux';
 import * as Actions from '../actions'; //Import your actions
 
 
-class PopularTV extends React.Component {
+class Favourites extends React.Component {
   constructor(props){
     super(props);
-    this.state={
-      popular:[],
-      favourite: [],
+    this.state ={
+      movies: [],
+      tv: [],
+      refresh: true,
     }
   }
 
-  async componentDidMount(){
-    let tv = await getPopularTV();
+  componentDidMount() {
     this.setState({
-      popular: tv,
-    });
-  };
-
-  onPressShow = (movie) =>{
-    this.state.favourite.push(movie);
-    ToastAndroid.showWithGravityAndOffset(
-      'Show Added to Favourites',
-      ToastAndroid.SHORT,
-      ToastAndroid.BOTTOM,
-      25,
-      50,
-    );
+      movies: this.props.movies,
+      tv: this.props.tv,
+      refresh: !this.state.refresh
+    })
   }
 
   render() {
     return (
       <View style={styles.container}>
         <View>
-          <Text style={styles.title}>Popular TV Shows</Text>
+          <Text style={styles.title}>My Movies</Text>
           <FlatList
-            data={this.state.popular}
+            data={this.state.movies}
             keyExtractor={(item,index) => index.toString()}
             renderItem={({item}) => 
             <View style={styles.movieContainer}>
                 <Image style={{width: 125, height: 200}} source={{uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path}}/>
                 <View style={{justifyContent: 'center', width: '75%', height: 175}}>
-                  <Text style={{fontSize: 20, fontWeight:'bold', marginLeft: '20%'}}>{item.original_name}</Text>
+                  <Text style={{fontSize: 20, fontWeight:'bold', marginLeft: '20%'}}>{item.title}</Text>
                     <View style={{flexWrap: 'wrap', alignItems: 'flex-start', flexDirection:'row', marginLeft: '20%', marginTop: '5%'}}>
                       <Icon name='star' color='#FFD700' size={40}/>
                       <Text style={{fontSize: 30, marginLeft: '3%'}}>{item.vote_average}/10</Text>
                     </View>
-                  <TouchableOpacity style={{ marginLeft: '20%', marginTop: '5%'}} onPress={() => this.onPressShow(item)}>
-                    <Icon name='rocket' size={30} color="#900" />
-                  </TouchableOpacity>
                 </View>
             </View>
             }
@@ -67,19 +54,21 @@ class PopularTV extends React.Component {
 
 function mapStateToProps(state, props) {
   return {
-      tv:state.profileReducer.tv
+      movies:state.profileReducer.profile.movies,
+      tv:state.profileReducer.profile.tv,
+
   }
 }
 
 // Doing this merges our actions into the component’s props,
 // while wrapping them in dispatch() so that they immediately dispatch an Action.
-// Just by doing this, we will have access to the actions defined in out actions file (action/PopularTV.js)
+// Just by doing this, we will have access to the actions defined in out actions file (action/PopularMovies.js)
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Actions, dispatch);
 }
 
 //Connect everything
-export default connect(mapStateToProps, mapDispatchToProps)(PopularTV);
+export default connect(mapStateToProps, mapDispatchToProps)(Favourites);
 
 const styles = StyleSheet.create({
   container: {

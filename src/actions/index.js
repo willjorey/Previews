@@ -1,6 +1,6 @@
 export const DATA_AVAILABLE = 'DATA_AVAILABLE';
 export const SET_PROFILE = 'SET_PROFILE';
-export const SET_FAVMOVIES = 'SET_FAVMOVIES';
+export const ADD_MOVIETOFAV = 'ADD_MOVIETOFAV';
 export const SET_FAVTV = 'SET_FAVTV';
 
 
@@ -29,9 +29,9 @@ export function setProfile(pro){
     };
 };
 
-export function setFavMovies(movies){
+export function addFavMovie(movie){
     return (dispatch) => {
-        dispatch({type: SET_FAVMOVIES, favMovies: movies});
+        dispatch({type: ADD_MOVIETOFAV, movie: movie});
     };
 };
 

@@ -3,7 +3,14 @@ import { StyleSheet, Text, View, FlatList, Image , TouchableOpacity, ToastAndroi
 import {searchMovies, getPopularMovies} from '../api/fetch.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class PopularMovies extends React.Component {
+import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import * as Actions from '../actions'; //Import your actions
+
+import Async from '../Async';
+const async = new Async();
+
+class PopularMovies extends React.Component {
   constructor(props){
     super(props);
     this.state={
@@ -13,11 +20,28 @@ export default class PopularMovies extends React.Component {
   }
 
   async componentDidMount(){
+    // async.removeProfile('profile')
+
     let movies = await getPopularMovies();
     this.setState({
       popular: movies,
     });
+    this.getProfile();
   };
+
+  getProfile = async () =>{
+    let profile = await async.getProfile('profile');
+    if(profile){
+      console.log('Profile Exists', profile);
+      this.props.setProfile({'profile': profile});
+
+    }else{
+      console.log('Profile Does Not Exist');
+      let new_profile = {profile: {movies: [], tv: []}};
+      async.storeProfile(new_profile, 'profile');
+      this.props.setProfile(new_profile);
+    }
+  }
 
   onPressMovie = (movie) =>{
     this.state.favourite.push(movie);
@@ -28,6 +52,9 @@ export default class PopularMovies extends React.Component {
       25,
       50,
     );
+    this.props.addFavMovie(movie);
+    console.log('MOVIE ADDED', this.props.profile.movies)
+    async.storeProfile(this.props.profile,'profile');
   }
 
   render() {
@@ -40,7 +67,7 @@ export default class PopularMovies extends React.Component {
             keyExtractor={(item,index) => index.toString()}
             renderItem={({item}) => 
             <View style={styles.movieContainer}>
-                <Image style={{width: 100, height: 175}} source={{uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path}}/>
+                <Image style={{width: 125, height: 200}} source={{uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path}}/>
                 <View style={{justifyContent: 'center', width: '75%', height: 175}}>
                   <Text style={{fontSize: 20, fontWeight:'bold', marginLeft: '20%'}}>{item.title}</Text>
                     <View style={{flexWrap: 'wrap', alignItems: 'flex-start', flexDirection:'row', marginLeft: '20%', marginTop: '5%'}}>
@@ -60,6 +87,22 @@ export default class PopularMovies extends React.Component {
   }
 }
 
+function mapStateToProps(state, props) {
+  return {
+      profile:state.profileReducer.profile,
+  }
+}
+
+// Doing this merges our actions into the component’s props,
+// while wrapping them in dispatch() so that they immediately dispatch an Action.
+// Just by doing this, we will have access to the actions defined in out actions file (action/PopularMovies.js)
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(Actions, dispatch);
+}
+
+//Connect everything
+export default connect(mapStateToProps, mapDispatchToProps)(PopularMovies);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -77,7 +120,7 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection: 'row',
     width: '90%',
-    height: 175,
+    height: 200,
     marginTop: 10,
     marginBottom: 10,
 

@@ -1,12 +1,23 @@
 import { combineReducers } from 'redux';
 
-const SET_PROFILE = 'SET_PROFILE';
+import { ADD_MOVIETOFAV, SET_FAVTV , SET_PROFILE} from "../actions/";
 
-let profileState = {profile: {}};
+let profileState = {profile: {movies: [], tv: []}};
 const profileReducer = (state = profileState, action) => {
     switch (action.type) {
+        case ADD_MOVIETOFAV:
+                state = {...profileState};
+                state.profile.movies.push(action.movie);
+                return state;
         case SET_PROFILE:
-            state = {...profileState, profile: action.profile};
+        console.log(action.profile)
+            state = {...profileState };
+            let movies = action.profile.profile.movies;
+            let tv = action.profile.profile.tv;
+            if( movies.length > 0)
+                state.profile.movies = [...state.profile.movies, ...movies]
+            if( tv.length > 0)
+                state.profile.tv = [...state.profile.movies, ...tv]
             return state;
         default:
             return state;

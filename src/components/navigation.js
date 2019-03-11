@@ -3,6 +3,8 @@ import { createStackNavigator, createAppContainer, DrawerItems, createDrawerNavi
 import {SafeAreaView, View, ScrollView} from 'react-native';
 import PopularScreen from '../screens/PopularScreen';
 import PopularTVScreen from '../screens/PopularTVScreen';
+import FavouritesScreen from '../screens/FavouritesScreen';
+
 
 
 const DrawerComponent = (props) => {
@@ -23,7 +25,10 @@ const drawer = new createDrawerNavigator({
     },
     "Popular TV Shows": {
         screen: PopularTVScreen,
-    }
+    },
+    "Favourites": {
+        screen: FavouritesScreen,
+    },
 },{
     contentComponent: DrawerComponent
 })
