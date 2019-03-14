@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import { createStackNavigator, createAppContainer, DrawerItems, createDrawerNavigator} from 'react-navigation';
-import {SafeAreaView, View, ScrollView} from 'react-native';
+import React, { Component, } from 'react';
+import { createStackNavigator, createAppContainer, DrawerItems, createDrawerNavigator,} from 'react-navigation';
+import {SafeAreaView, View, ScrollView, TouchableOpacity, Text} from 'react-native';
 import PopularScreen from '../screens/PopularScreen';
 import PopularTVScreen from '../screens/PopularTVScreen';
 import FavouritesScreen from '../screens/FavouritesScreen';
 
-
+import Async from '../Async';
+const async = new Async();
 
 const DrawerComponent = (props) => {
     return(
@@ -14,16 +15,19 @@ const DrawerComponent = (props) => {
         </View>
         <ScrollView>
             <DrawerItems {...props}/>
-        </ScrollView>   
+        </ScrollView>
+        <TouchableOpacity onPress={() => async.removeProfile()}>
+            <Text>Delete Profile</Text>
+        </TouchableOpacity>
     </SafeAreaView>
     );
 }
 
 const drawer = new createDrawerNavigator({
-    "Popular Movies": {
+    "Movies": {
         screen: PopularScreen,
     },
-    "Popular TV Shows": {
+    "TV Shows": {
         screen: PopularTVScreen,
     },
     "Favourites": {

@@ -19,9 +19,9 @@ export default class Async{
             console.log(error.message);
         }
     };
-    removeProfile = async (key) => {
+    removeProfile = async () => {
         try {
-          return await AsyncStorage.removeItem(key);
+          return await AsyncStorage.removeItem('profile');
         } catch (error) {
           // Error saving data
         }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Image , TouchableOpacity, ToastAndroid} from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image , TouchableOpacity, ToastAndroid, TextInput} from 'react-native';
 import {searchMovies, getPopularMovies} from '../api/fetch.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -15,6 +15,7 @@ class PopularMovies extends React.Component {
     super(props);
     this.state={
       popular:[],
+      search: '',
     }
   }
 
@@ -24,6 +25,7 @@ class PopularMovies extends React.Component {
     let movies = await getPopularMovies();
     this.setState({
       popular: movies,
+      search: '',
     });
     this.getProfile();
   };
@@ -66,10 +68,29 @@ class PopularMovies extends React.Component {
     }
   }
 
+
+  onSearch = async ()=>{
+    let search = this.state.search;
+    let resp = await searchMovies(search);
+    if (resp){
+      this.setState({popular: resp})
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View>
+        <View style={{marginTop: 20}}>
+            <TextInput
+              onChangeText={(text) => this.setState({search:text})}
+              placeholder="Type Here..."
+            />
+            <TouchableOpacity style={{width: '20%', marginTop: 10}} onPress={() => this.onSearch()}>
+              <Text>Search</Text>
+            </TouchableOpacity>
+          </View>
+
           <Text style={styles.title}>Popular Movies</Text>
           <FlatList
             data={this.state.popular}
@@ -120,7 +141,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title:{
-    marginTop: '10%',
     marginBottom:'10%',
     textAlign:'center',
     padding: 10,
