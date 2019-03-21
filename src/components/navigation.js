@@ -4,6 +4,7 @@ import {SafeAreaView, View, ScrollView, TouchableOpacity, Text} from 'react-nati
 import PopularScreen from '../screens/PopularScreen';
 import PopularTVScreen from '../screens/PopularTVScreen';
 import FavouritesScreen from '../screens/FavouritesScreen';
+import SearchMovieScreen from '../screens/SearchMovieScreen';
 
 import Async from '../Async';
 const async = new Async();
@@ -32,6 +33,9 @@ const drawer = new createDrawerNavigator({
     },
     "Favourites": {
         screen: FavouritesScreen,
+    },
+    "Search Movie":{
+        screen: SearchMovieScreen
     },
 },{
     contentComponent: DrawerComponent
