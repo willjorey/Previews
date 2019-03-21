@@ -46,6 +46,16 @@ class PopularTV extends React.Component {
       console.log(this.props.profile)
       async.storeProfile(this.props.profile);
     }
+  };
+
+  ShowRating(props){
+    let show = props.show;
+    return(
+      <View>
+        <Icon name='star' color='#FFD700' size={10}/>
+        <Text>{show.vote_average}/10</Text>
+      </View>
+    )
   }
 
   render() {
@@ -60,10 +70,10 @@ class PopularTV extends React.Component {
             <View style={styles.movieContainer}>
                 <Image style={{width: 125, height: 200}} source={{uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path}}/>
                 <View style={{justifyContent: 'center', width: '75%', height: 175}}>
-                  <Text style={{fontSize: 20, fontWeight:'bold', marginLeft: '20%'}}>{item.original_name}</Text>
+                  <Text style={{fontSize: 20, fontWeight:'bold', marginLeft: '20%', color: 'white'}}>{item.original_name}</Text>
                     <View style={{flexWrap: 'wrap', alignItems: 'flex-start', flexDirection:'row', marginLeft: '20%', marginTop: '5%'}}>
                       <Icon name='star' color='#FFD700' size={40}/>
-                      <Text style={{fontSize: 30, marginLeft: '3%'}}>{item.vote_average}/10</Text>
+                      <Text style={{fontSize: 30, marginLeft: '3%', color: 'gold'}}>{item.vote_average}/10</Text>
                     </View>
                   <TouchableOpacity style={{ marginLeft: '20%', marginTop: '5%'}} onPress={() => this.onPressShow(item)}>
                     <Icon name='rocket' size={30} color="#900" />
@@ -98,7 +108,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(PopularTV);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
   },
   title:{
@@ -106,7 +115,8 @@ const styles = StyleSheet.create({
     marginBottom:'10%',
     textAlign:'center',
     padding: 10,
-    fontSize: 30
+    fontSize: 30,
+    color: 'gold',
   },
   movieContainer:{
     flex:1,
@@ -115,6 +125,13 @@ const styles = StyleSheet.create({
     height: 200,
     marginTop: 10,
     marginBottom: 10,
-
+  },
+  showContainer:{
+    flex:1,
+    width: '90%',
+    height: 200,
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 3
   }
 });

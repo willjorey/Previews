@@ -93,7 +93,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Favourites);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
   },
   title:{
@@ -101,7 +100,8 @@ const styles = StyleSheet.create({
     marginBottom:'10%',
     textAlign:'center',
     padding: 10,
-    fontSize: 30
+    fontSize: 30,
+    color: 'gold'
   },
   movieContainer:{
     flex:1,

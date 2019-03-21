@@ -5,6 +5,7 @@ import PopularScreen from '../screens/PopularScreen';
 import PopularTVScreen from '../screens/PopularTVScreen';
 import FavouritesScreen from '../screens/FavouritesScreen';
 import SearchMovieScreen from '../screens/SearchMovieScreen';
+import HomeScreen from '../screens/HomeScreen';
 
 import Async from '../Async';
 const async = new Async();
@@ -25,6 +26,9 @@ const DrawerComponent = (props) => {
 }
 
 const drawer = new createDrawerNavigator({
+    "Home":{
+        screen: HomeScreen
+    },
     "Movies": {
         screen: PopularScreen,
     },

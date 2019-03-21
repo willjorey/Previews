@@ -80,10 +80,10 @@ class PopularMovies extends React.Component {
             <View style={styles.movieContainer}>
                 <Image style={{width: 125, height: 200}} source={{uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path}}/>
                 <View style={{justifyContent: 'center', width: '75%', height: 175}}>
-                  <Text style={{fontSize: 20, fontWeight:'bold', marginLeft: '20%'}}>{item.title}</Text>
+                  <Text style={{fontSize: 20, fontWeight:'bold', marginLeft: '20%', color: 'white'}}>{item.title}</Text>
                     <View style={{flexWrap: 'wrap', alignItems: 'flex-start', flexDirection:'row', marginLeft: '20%', marginTop: '5%'}}>
                       <Icon name='star' color='#FFD700' size={40}/>
-                      <Text style={{fontSize: 30, marginLeft: '3%'}}>{item.vote_average}/10</Text>
+                      <Text style={{fontSize: 30, marginLeft: '3%', color: 'gold'}}>{item.vote_average}/10</Text>
                     </View>
                   <TouchableOpacity style={{ marginLeft: '20%', marginTop: '5%'}} onPress={() => this.onPressMovie(item)}>
                     <Icon name='rocket' size={30} color="#900" />
@@ -118,7 +118,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(PopularMovies);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
   },
   title:{
@@ -126,7 +125,8 @@ const styles = StyleSheet.create({
     marginBottom:'10%',
     textAlign:'center',
     padding: 10,
-    fontSize: 30
+    fontSize: 30,
+    color: 'gold'
   },
   movieContainer:{
     flex:1,

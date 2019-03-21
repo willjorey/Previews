@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, } from 'react-native';
+import Home from '../components/Home';
 
 export default class HomeScreen extends Component {
   static navigationOptions = {
@@ -7,8 +8,8 @@ export default class HomeScreen extends Component {
   };
   render() {
     return (
-      <View style={{backgroundColor: '#1E90FF', flex:1, opacity: 0.8}}>
-        
+      <View style={{backgroundColor: '#000000', flex:1,}}>
+        <Home/>
       </View>
     );
   }

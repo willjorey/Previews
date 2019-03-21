@@ -17,7 +17,7 @@ class PopularScreen extends Component {
 
   render() {
     return (
-      <View style={{flex:1}}>
+      <View style={{flex:1, backgroundColor: '#000000'}}>
         <PopularMovies/>
       </View>
     );
