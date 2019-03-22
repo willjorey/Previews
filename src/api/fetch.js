@@ -25,6 +25,36 @@ export const getPopularMovies = async () =>{
 
 }
 
+export const getTopRatedMovies = async () =>{
+    try{
+        const response = await fetch(IP+'/movie/top_rated');
+        const movies = await response.json();
+        return movies.topRated.results
+    }catch(e){
+        console.log(e)
+    }
+}
+
+export const getUpcomingMovies = async () =>{
+    try{
+        const response = await fetch(IP+'/movie/upcoming');
+        const movies = await response.json();
+        return movies.upcoming.results
+    }catch(e){
+        console.log(e)
+    }
+}
+
+export const getNowPlayingMovies = async () =>{
+    try{
+        const response = await fetch(IP+'/movie/now_playing');
+        const movies = await response.json();
+        return movies.now_playing.results
+    }catch(e){
+        console.log(e)
+    }
+}
+
 export const getPopularTV = async () =>{
     try{
         const response = await fetch(IP+'/tv');

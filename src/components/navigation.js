@@ -1,11 +1,14 @@
 import React, { Component, } from 'react';
 import { createStackNavigator, createAppContainer, DrawerItems, createDrawerNavigator,} from 'react-navigation';
 import {SafeAreaView, View, ScrollView, TouchableOpacity, Text} from 'react-native';
+
 import PopularScreen from '../screens/PopularScreen';
 import PopularTVScreen from '../screens/PopularTVScreen';
 import FavouritesScreen from '../screens/FavouritesScreen';
 import SearchMovieScreen from '../screens/SearchMovieScreen';
 import HomeScreen from '../screens/HomeScreen';
+import MoviesScreen from '../screens/MoviesScreen';
+import TvScreen from '../screens/TvScreen';
 
 import Async from '../Async';
 const async = new Async();
@@ -29,10 +32,16 @@ const drawer = new createDrawerNavigator({
     "Home":{
         screen: HomeScreen
     },
-    "Movies": {
+    "Movies":{
+        screen: MoviesScreen
+    },
+    "TV Shows":{
+        screen: TvScreen
+    },
+    "Popular Movies": {
         screen: PopularScreen,
     },
-    "TV Shows": {
+    "Popular TV Shows": {
         screen: PopularTVScreen,
     },
     "Favourites": {

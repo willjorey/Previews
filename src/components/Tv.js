@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Image , ScrollView} from 'react-native';
-import {getPopularMovies, getPopularTV} from '../api/fetch.js';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {getPopularMovies, getUpcomingMovies, getNowPlayingMovies, getTopRatedMovies, getPopularTV,} from '../api/fetch.js';
 
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
@@ -10,40 +9,25 @@ import * as Actions from '../actions'; //Import your actions
 import Async from '../Async';
 const async = new Async();
 
-class Home extends React.Component {
+class Tv extends React.Component {
   constructor(props){
     super(props);
     this.state={
-      movies:[],
-      tv: [],
+      popular:[],
+      top_rated: [],
     }
   }
 
   async componentDidMount(){
-    // async.removeProfile('profile')
+    // let top_rated = await getTopRatedMovies();
+    let popular = await getPopularTV();
 
-    let movies = await getPopularMovies();
-    let tv = await getPopularTV();
     this.setState({
-        movies,
-        tv
+        popular,
+
     });
-    this.getProfile();
   };
 
-  getProfile = async () =>{
-    let profile = await async.getProfile('profile');
-    if(profile){
-      console.log('Profile Exists');
-      this.props.setProfile({'profile': profile});
-
-    }else{
-      console.log('Profile Does Not Exist');
-      let new_profile = {profile: {movies: [], tv: []}};
-      async.storeProfile(new_profile);
-      this.props.setProfile(new_profile);
-    }
-  }
 
 
   render() {
@@ -51,22 +35,11 @@ class Home extends React.Component {
       <ScrollView >
         <View style={styles.container}>
             <View>
-            <Text style={styles.title}>Popular Movies</Text>
-            <FlatList
-                horizontal={true}
-                data={this.state.movies}
-                keyExtractor={(item,index) => index.toString()}
-                renderItem={({item}) => 
-                <View style={styles.movieContainer}>
-                    <Image style={{width: 125, height: 200}} source={{uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path}}/>
-                </View>
-                }
-            />
 
-            <Text style={styles.title}>Popular TV Shows</Text>
+            <Text style={styles.title}>Popular</Text>
             <FlatList
                 horizontal={true}
-                data={this.state.tv}
+                data={this.state.popular}
                 keyExtractor={(item,index) => index.toString()}
                 renderItem={({item}) => 
                 <View style={styles.movieContainer}>
@@ -97,7 +70,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 //Connect everything
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Tv);
 
 const styles = StyleSheet.create({
   container: {
